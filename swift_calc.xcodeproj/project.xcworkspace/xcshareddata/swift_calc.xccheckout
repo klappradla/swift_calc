@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>9A817956-7A10-41D6-9896-00443914BCDF</string>
+	<key>IDESourceControlProjectName</key>
+	<string>swift_calc</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>C26132BE8A4B4F5224319C6602CE5224C801D32E</key>
+		<string>https://github.com/klappradla/swift_calc.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>swift_calc.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>C26132BE8A4B4F5224319C6602CE5224C801D32E</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/klappradla/swift_calc.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>C26132BE8A4B4F5224319C6602CE5224C801D32E</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C26132BE8A4B4F5224319C6602CE5224C801D32E</string>
+			<key>IDESourceControlWCCName</key>
+			<string>swift_calc</string>
+		</dict>
+	</array>
+</dict>
+</plist>
