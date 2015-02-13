@@ -23,6 +23,8 @@ class ViewController: UIViewController {
     
     var typingNumber = false
     
+    var motor = Calculator()
+    
     var operation: String?
     
     var stack = [Double]()
@@ -46,9 +48,10 @@ class ViewController: UIViewController {
     
     @IBAction func operate(sender: UIButton) {
         if typingNumber {
-            stack.append(displayValue)
-            println("add to stack: \(displayValue)")
-            println("stacksize: \(stack.count)")
+            motor.pushOperand(displayValue)
+            //stack.append(displayValue)
+            //println("add to stack: \(displayValue)")
+            //println("stacksize: \(stack.count)")
             //evaluate()
             typingNumber = false
         }
