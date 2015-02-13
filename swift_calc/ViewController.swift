@@ -22,6 +22,12 @@ class ViewController: UIViewController {
     }
     
     var typingNumber = false
+    
+    var operation: String?
+    
+    var stack = [Double]()
+    
+    var knownOperations = ["+", "−", "×", "÷"]
 
     @IBAction func addDigit(sender: UIButton) {
         if typingNumber {
@@ -29,6 +35,42 @@ class ViewController: UIViewController {
         } else {
             display.text! = sender.currentTitle!
             typingNumber = true
+        }
+    }
+    
+    @IBAction func operate(sender: UIButton) {
+        if typingNumber {
+            stack.append(displayValue)
+            println("add to stack: \(displayValue)")
+            println("stacksize: \(stack.count)")
+            //evaluate()
+            typingNumber = false
+        }
+        operation = sender.currentTitle!
+        println("set operation: \(operation!)")
+    }
+    
+    @IBAction func evaluate() {
+        println("evaluate")
+        typingNumber = false
+        if operation != nil && stack.count > 0 {
+            display.text! = "\(performOperation(operation!))"
+        }
+        println("stack: \(stack.count)")
+    }
+    
+    func performOperation(operation: String) -> Double {
+        switch operation {
+        case "+":
+            return stack.removeLast() + displayValue
+        case "−":
+            return stack.removeLast() - displayValue
+        case "×":
+            return stack.removeLast() * displayValue
+        case "÷":
+            return stack.removeLast() / displayValue
+        default:
+            return 0
         }
     }
 }
