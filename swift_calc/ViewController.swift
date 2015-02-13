@@ -29,6 +29,12 @@ class ViewController: UIViewController {
     
     var knownOperations = ["+", "−", "×", "÷"]
 
+    @IBAction func reset() {
+        stack.removeAll()
+        displayValue = 0
+        operation = nil
+    }
+    
     @IBAction func addDigit(sender: UIButton) {
         if typingNumber {
             display.text! += sender.currentTitle!
