@@ -44,10 +44,6 @@ class ViewController: UIViewController {
     @IBAction func operate(sender: UIButton) {
         if typingNumber {
             motor.pushOperand(displayValue)
-            //stack.append(displayValue)
-            //println("add to stack: \(displayValue)")
-            //println("stacksize: \(stack.count)")
-            //evaluate()
             typingNumber = false
         }
         operation = sender.currentTitle!
@@ -59,7 +55,7 @@ class ViewController: UIViewController {
             typingNumber = false
             motor.pushOperand(displayValue)
             if let newValue = motor.performOperation(operation!) {
-                displayValue = newValue            
+                displayValue = newValue
             }
         }
     }

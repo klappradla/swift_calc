@@ -36,26 +36,28 @@ class Calculator {
         if let operation = knownOperations[type] {
             stack.append(operation)
             println("add operation: \(type)")
-        }
-        if let result = evaluate() {
-            println("app result to stack: \(result)")
-            stack.append(Op.Operand(result))
-            return result
+            if let result = evaluate() {
+                stack.append(Op.Operand(result))
+                println("app result to stack: \(result)")
+                return result
+            }
         }
         return nil
     }
     
     private func evaluate() -> Double? {
-        if let currentOp = stack.removeLast() {
-            switch currentOp {
-            case .Operand(let value):
-                println("return value: \(value)")
-                return value
-            case .BinaryOperation(_, let operation):
-                if let op1 = evaluate() {
-                    if let op2 = evaluate() {
-                        println("return operation")
-                        return operation(op1, op2)
+        if !stack.isEmpty {
+            if let currentOp = stack.removeLast() {
+                switch currentOp {
+                case .Operand(let value):
+                    println("return value: \(value)")
+                    return value
+                case .BinaryOperation(_, let operation):
+                    if let op1 = evaluate() {
+                        if let op2 = evaluate() {
+                            println("return operation")
+                            return operation(op1, op2)
+                        }
                     }
                 }
             }
