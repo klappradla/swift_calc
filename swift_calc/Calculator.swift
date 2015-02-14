@@ -32,11 +32,9 @@ class Calculator {
         stack.append(Op.Operand(value))
     }
     
-    func performOperation(type: String?) -> Double? {
-        if type != nil {
-            if let operation = knownOperations[type!] {
-                stack.append(operation)
-            }
+    func performOperation(type: String) -> Double? {
+        if let operation = knownOperations[type] {
+            stack.append(operation)
         }
         
         // also evaluate if no operation (just return value...)
