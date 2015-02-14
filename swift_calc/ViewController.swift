@@ -43,8 +43,13 @@ class ViewController: UIViewController {
     
     @IBAction func operate(sender: UIButton) {
         if typingNumber {
-            motor.pushOperand(displayValue)
-            typingNumber = false
+            if (operation != nil) {
+                println("call evaluate")
+                evaluate()
+            } else {
+                motor.pushOperand(displayValue)
+                typingNumber = false
+            }
         }
         operation = sender.currentTitle!
         println("set operation: \(operation!)")
@@ -55,6 +60,7 @@ class ViewController: UIViewController {
             typingNumber = false
             motor.pushOperand(displayValue)
             if let newValue = motor.performOperation(operation!) {
+                operation = nil
                 displayValue = newValue
             }
         }

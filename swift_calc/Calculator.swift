@@ -35,12 +35,13 @@ class Calculator {
     func performOperation(type: String) -> Double? {
         if let operation = knownOperations[type] {
             stack.append(operation)
-            println("add operation: \(type)")
-            if let result = evaluate() {
-                stack.append(Op.Operand(result))
-                println("app result to stack: \(result)")
-                return result
-            }
+        }
+        
+        // also evaluate if no operation (just return value...)
+        if let result = evaluate() {
+            stack.append(Op.Operand(result))
+            println("app result to stack: \(result)")
+            return result
         }
         return nil
     }
