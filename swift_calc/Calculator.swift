@@ -28,7 +28,7 @@ class Calculator {
     }
     
     func pushOperand(value: Double) {
-        println("push operand: \(value)")
+        println("add operand: \(value)")
         stack.append(Op.Operand(value))
     }
     
@@ -37,7 +37,12 @@ class Calculator {
             stack.append(operation)
             println("add operation: \(type)")
         }
-        return evaluate()
+        if let result = evaluate() {
+            println("app result to stack: \(result)")
+            stack.append(Op.Operand(result))
+            return result
+        }
+        return nil
     }
     
     private func evaluate() -> Double? {
