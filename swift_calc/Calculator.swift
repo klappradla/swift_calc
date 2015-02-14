@@ -47,13 +47,14 @@ class Calculator {
                 println("return value: \(value)")
                 return value
             case .BinaryOperation(_, let operation):
-                let op1 = evaluate()
-                let op2 = evaluate()
-                println("return operation")
-                return operation(op1!, op2!)
+                if let op1 = evaluate() {
+                    if let op2 = evaluate() {
+                        println("return operation")
+                        return operation(op1, op2)
+                    }
+                }
             }
-        } else {
-            return nil
         }
+        return nil
     }
 }
