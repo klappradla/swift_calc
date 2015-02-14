@@ -26,13 +26,8 @@ class ViewController: UIViewController {
     var motor = Calculator()
     
     var operation: String?
-    
-    var stack = [Double]()
-    
-    var knownOperations = ["+", "−", "×", "÷"]
 
     @IBAction func reset() {
-        stack.removeAll()
         displayValue = 0
         operation = nil
     }
@@ -60,26 +55,10 @@ class ViewController: UIViewController {
     }
     
     @IBAction func evaluate() {
-        println("evaluate")
-        typingNumber = false
-        if operation != nil && stack.count > 0 {
-            display.text! = "\(performOperation(operation!))"
-        }
-        println("stack: \(stack.count)")
-    }
-    
-    func performOperation(operation: String) -> Double {
-        switch operation {
-        case "+":
-            return stack.removeLast() + displayValue
-        case "−":
-            return stack.removeLast() - displayValue
-        case "×":
-            return stack.removeLast() * displayValue
-        case "÷":
-            return stack.removeLast() / displayValue
-        default:
-            return 0
+        if typingNumber {
+            typingNumber = false
+            motor.pushOperand(displayValue)
+            displayValue = motor.performOperation(operation!)
         }
     }
 }

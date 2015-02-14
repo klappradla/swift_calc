@@ -22,7 +22,7 @@ class Calculator {
     init() {
         println("init calculator")
         knownOperations["+"] = Op.BinaryOperation("+", { $0 + $1})
-        knownOperations["−"] = Op.BinaryOperation("−", { $1 - $1})
+        knownOperations["−"] = Op.BinaryOperation("−", { $1 - $0})
         knownOperations["×"] = Op.BinaryOperation("×", { $0 * $1})
         knownOperations["÷"] = Op.BinaryOperation("÷", { $1 / $0})
     }
@@ -36,6 +36,28 @@ class Calculator {
             println("new value: \(value)")
         default:
             break
+        }
+    }
+    
+    func performOperation(type: String) -> Double {
+        if let operation = knownOperations[type] {
+            stack.append(operation)
+            println("add operation: \(type)")
+        }
+        return evaluate()
+    }
+    
+    private func evaluate() -> Double {
+        var currentOp = stack.removeLast()
+        switch currentOp {
+        case .Operand(let value):
+            println("return value: \(value)")
+            return value
+        case .BinaryOperation(_, let operation):
+            let op1 = evaluate()
+            let op2 = evaluate()
+            println("return operation")
+            return operation(op1, op2)
         }
     }
 }
