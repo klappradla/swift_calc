@@ -15,31 +15,24 @@ class Calculator {
         case BinaryOperation(String, (Double, Double) -> Double) // case associated with symbol and function
     }
     
-    private var stack = [Op]()
+    private var stack = [Op?]()
     
     private var knownOperations = [String:Op]()
     
     init() {
-        println("init calculator")
+        //println("init calculator")
         knownOperations["+"] = Op.BinaryOperation("+", { $0 + $1})
         knownOperations["−"] = Op.BinaryOperation("−", { $1 - $0})
         knownOperations["×"] = Op.BinaryOperation("×", { $0 * $1})
         knownOperations["÷"] = Op.BinaryOperation("÷", { $1 / $0})
     }
     
-    func pushOperand(operand: Double) {
-        let newOperand = Op.Operand(operand)
-        stack.append(newOperand)
-        println("stack push operand: \(stack.last)")
-        switch newOperand {
-        case .Operand(let value):
-            println("new value: \(value)")
-        default:
-            break
-        }
+    func pushOperand(value: Double) {
+        println("push operand: \(value)")
+        stack.append(Op.Operand(value))
     }
     
-    func performOperation(type: String) -> Double {
+    func performOperation(type: String) -> Double? {
         if let operation = knownOperations[type] {
             stack.append(operation)
             println("add operation: \(type)")
@@ -47,17 +40,20 @@ class Calculator {
         return evaluate()
     }
     
-    private func evaluate() -> Double {
-        var currentOp = stack.removeLast()
-        switch currentOp {
-        case .Operand(let value):
-            println("return value: \(value)")
-            return value
-        case .BinaryOperation(_, let operation):
-            let op1 = evaluate()
-            let op2 = evaluate()
-            println("return operation")
-            return operation(op1, op2)
+    private func evaluate() -> Double? {
+        if let currentOp = stack.removeLast() {
+            switch currentOp {
+            case .Operand(let value):
+                println("return value: \(value)")
+                return value
+            case .BinaryOperation(_, let operation):
+                let op1 = evaluate()
+                let op2 = evaluate()
+                println("return operation")
+                return operation(op1!, op2!)
+            }
+        } else {
+            return nil
         }
     }
 }

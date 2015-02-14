@@ -58,7 +58,9 @@ class ViewController: UIViewController {
         if typingNumber {
             typingNumber = false
             motor.pushOperand(displayValue)
-            displayValue = motor.performOperation(operation!)
+            if let newValue = motor.performOperation(operation!) {
+                displayValue = newValue            
+            }
         }
     }
 }
