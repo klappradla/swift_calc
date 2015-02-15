@@ -42,6 +42,13 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func addFloatingPoing(sender: UIButton) {
+        if display.text?.rangeOfString(sender.currentTitle!) == nil {
+            addDigit(sender)
+        }
+    }
+    
+    
     @IBAction func operate(sender: UIButton) {
         if typingNumber {
             if (operation != nil) {
