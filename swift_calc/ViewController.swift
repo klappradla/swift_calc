@@ -28,7 +28,8 @@ class ViewController: UIViewController {
     var operation: String?
 
     @IBAction func reset() {
-        displayValue = 0
+        typingNumber = false
+        display.text! = "\(0)"
         operation = nil
     }
     
