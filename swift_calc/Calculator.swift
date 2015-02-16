@@ -12,6 +12,7 @@ class Calculator {
     
     private enum Op {
         case Operand(Double) // case associated with a double value
+        case UnaryOperation(String, Double -> Double)
         case BinaryOperation(String, (Double, Double) -> Double) // case associated with symbol and function
     }
     
@@ -25,6 +26,7 @@ class Calculator {
         knownOperations["−"] = Op.BinaryOperation("−", { $1 - $0})
         knownOperations["×"] = Op.BinaryOperation("×", { $0 * $1})
         knownOperations["÷"] = Op.BinaryOperation("÷", { $1 / $0})
+        knownOperations["√"] = Op.UnaryOperation("√", { sqrt($0) })
     }
     
     func pushOperand(value: Double) {
@@ -53,6 +55,10 @@ class Calculator {
                 case .Operand(let value):
                     println("return value: \(value)")
                     return value
+                case .UnaryOperation(_, let operation):
+                    if let op = evaluate() {
+                        return operation(op)
+                    }
                 case .BinaryOperation(_, let operation):
                     if let op1 = evaluate() {
                         if let op2 = evaluate() {

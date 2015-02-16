@@ -64,14 +64,16 @@ class ViewController: UIViewController {
     }
     
     @IBAction func evaluate() {
-        if typingNumber && operation != nil{
-            typingNumber = false
-            motor.pushOperand(displayValue)
+        if operation != nil {
+            if typingNumber {
+                motor.pushOperand(displayValue)
+                typingNumber = false
+            }
             if let newValue = motor.performOperation(operation!) {
                 displayValue = newValue
             }
+            operation = nil            
         }
-        operation = nil
     }
 }
 
