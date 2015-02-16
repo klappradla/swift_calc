@@ -21,11 +21,13 @@ class Calculator {
     private var knownOperations = [String:Op]()
     
     init() {
-        //println("init calculator")
+        // binary operations
         knownOperations["+"] = Op.BinaryOperation("+", { $0 + $1})
         knownOperations["−"] = Op.BinaryOperation("−", { $1 - $0})
         knownOperations["×"] = Op.BinaryOperation("×", { $0 * $1})
         knownOperations["÷"] = Op.BinaryOperation("÷", { $1 / $0})
+        
+        // unary operations
         knownOperations["√"] = Op.UnaryOperation("√", { sqrt($0) })
         knownOperations["sin"] = Op.UnaryOperation("sin", { sin($0) })
         knownOperations["cos"] = Op.UnaryOperation("cos", { cos($0) })
