@@ -48,6 +48,13 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func addVariable(sender: UIButton) {
+        if !typingNumber {
+            motor.pushOperand(sender.currentTitle!)
+            display.text! = sender.currentTitle!
+        }
+    }
+    
     
     @IBAction func operate(sender: UIButton) {
         if typingNumber {
@@ -64,16 +71,14 @@ class ViewController: UIViewController {
     }
     
     @IBAction func evaluate() {
-        if operation != nil {
-            if typingNumber {
-                motor.pushOperand(displayValue)
-                typingNumber = false
-            }
-            if let newValue = motor.performOperation(operation!) {
-                displayValue = newValue
-            }
-            operation = nil            
+        if typingNumber {
+            motor.pushOperand(displayValue)
+            typingNumber = false
         }
+        if let newValue = motor.performOperation(operation) {
+            displayValue = newValue
+        }
+        operation = nil
     }
 }
 

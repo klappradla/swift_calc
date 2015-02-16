@@ -20,6 +20,8 @@ class Calculator {
     
     private var knownOperations = [String:Op]()
     
+    private var variables = [String:Op]()
+    
     init() {
         // binary operations
         knownOperations["+"] = Op.BinaryOperation("+", { $0 + $1})
@@ -31,6 +33,9 @@ class Calculator {
         knownOperations["√"] = Op.UnaryOperation("√", { sqrt($0) })
         knownOperations["sin"] = Op.UnaryOperation("sin", { sin($0) })
         knownOperations["cos"] = Op.UnaryOperation("cos", { cos($0) })
+        
+        // variables
+        variables["π"] = Op.Operand(M_PI)
     }
     
     func pushOperand(value: Double) {
@@ -38,9 +43,20 @@ class Calculator {
         stack.append(Op.Operand(value))
     }
     
-    func performOperation(type: String) -> Double? {
-        if let operation = knownOperations[type] {
-            stack.append(operation)
+    func pushOperand(char: String) {
+        if let variable = variables[char] {
+            println("add variable: \(char)")
+            stack.append(variable)
+        }
+        
+    }
+    
+    func performOperation(type: String?) -> Double? {
+        if let symbol = type {
+            if let operation = knownOperations[symbol] {
+                stack.append(operation)
+            }
+            
         }
         
         // also evaluate if no operation (just return value...)
