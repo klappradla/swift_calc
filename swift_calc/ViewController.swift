@@ -12,6 +12,8 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var display: UILabel!
     
+    @IBOutlet weak var history: UILabel!
+    
     var displayValue: Double {
         get {
             return NSNumberFormatter().numberFromString(display.text!)!.doubleValue
@@ -55,12 +57,16 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func addDigitToEquation(sender: UIButton) {
+        history.text! += sender.currentTitle!
+    }
     
     @IBAction func operate(sender: UIButton) {
         if typingNumber {
             if (operation != nil) {
-                println("call evaluate")
+                //println("call evaluate")
                 evaluate()
+                //enter()
             } else {
                 motor.pushOperand(displayValue)
                 typingNumber = false
@@ -70,15 +76,21 @@ class ViewController: UIViewController {
         println("set operation: \(operation!)")
     }
     
-    @IBAction func evaluate() {
+    @IBAction func enter() {
+        if let newValue = evaluate() {
+            displayValue = newValue
+        }
+    }
+    
+    func evaluate() -> Double? {
+        println("call eval")
         if typingNumber {
             motor.pushOperand(displayValue)
             typingNumber = false
         }
-        if let newValue = motor.performOperation(operation) {
-            displayValue = newValue
-        }
+        let result = motor.performOperation(operation)
         operation = nil
+        return result
     }
 }
 

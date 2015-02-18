@@ -10,10 +10,22 @@ import Foundation
 
 class Calculator {
     
-    private enum Op {
+    private enum Op: Printable { // implements protocol printable
         case Operand(Double) // case associated with a double value
         case UnaryOperation(String, Double -> Double)
         case BinaryOperation(String, (Double, Double) -> Double) // case associated with symbol and function
+        
+        // implementation of protocol
+        var description: String {
+            switch self {
+            case .Operand(let value):
+                return "\(value)"
+            case .UnaryOperation(let symbol, _):
+                return symbol
+            case .BinaryOperation(let symbol, _):
+                return symbol
+            }
+        }
     }
     
     private var stack = [Op?]()
@@ -63,6 +75,10 @@ class Calculator {
         if let result = evaluate() {
             stack.append(Op.Operand(result))
             println("app result to stack: \(result)")
+//            println("print stack:")
+//            for op in stack {
+//                println(op!.description)
+//            }
             return result
         }
         return nil
