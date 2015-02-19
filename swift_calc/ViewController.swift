@@ -9,84 +9,93 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    var typing = false
+    
+    var motor = Calculator()
+    
+    var operation: String?
+    
+    var currentNumber = ""
+    
+    @IBOutlet weak var history: UILabel!
 
     @IBOutlet weak var display: UILabel!
     
-    @IBOutlet weak var history: UILabel!
-    
-    var displayValue: Double {
+    var currentValue: Double {
         get {
-            return NSNumberFormatter().numberFromString(display.text!)!.doubleValue
+            return NSNumberFormatter().numberFromString(currentNumber)!.doubleValue
         }
         set {
             display.text = "\(newValue)"
         }
     }
-    
-    var typingNumber = false
-    
-    var motor = Calculator()
-    
-    var operation: String?
 
+    @IBAction func appendDigit(sender: UIButton) {
+        if typing {
+            //display.text! += sender.currentTitle!
+            currentNumber += sender.currentTitle!
+        } else {
+            // do something
+            //display.text! = sender.currentTitle!
+            currentNumber = sender.currentTitle!
+            typing = true
+        }
+        appendToDisplay(sender.currentTitle!)
+    }
+    
+    func appendToDisplay(char: String) {
+        history.text! += char
+    }
+    
+    @IBAction func floatingPoint(sender: UIButton) {
+        if currentNumber.rangeOfString(sender.currentTitle!) == nil {
+            appendDigit(sender)
+        }
+    }
+    
     @IBAction func reset() {
-        typingNumber = false
+        typing = false
         display.text! = "\(0)"
         operation = nil
     }
     
-    @IBAction func addDigit(sender: UIButton) {
-        if typingNumber {
-            display.text! += sender.currentTitle!
-        } else {
-            display.text! = sender.currentTitle!
-            typingNumber = true
-        }
-    }
-    
-    @IBAction func addFloatingPoing(sender: UIButton) {
-        if display.text?.rangeOfString(sender.currentTitle!) == nil {
-            addDigit(sender)
-        }
-    }
-    
     @IBAction func addVariable(sender: UIButton) {
-        if !typingNumber {
+        if !typing {
             motor.pushOperand(sender.currentTitle!)
-            display.text! = sender.currentTitle!
+            //display.text! = sender.currentTitle!
+            appendToDisplay(sender.currentTitle!)
         }
-    }
-    
-    @IBAction func addDigitToEquation(sender: UIButton) {
-        history.text! += sender.currentTitle!
     }
     
     @IBAction func operate(sender: UIButton) {
-        if typingNumber {
+        if typing {
             if (operation != nil) {
                 //println("call evaluate")
                 evaluate()
                 //enter()
             } else {
-                motor.pushOperand(displayValue)
-                typingNumber = false
+                motor.pushOperand(currentValue)
+                typing = false
             }
         }
         operation = sender.currentTitle!
+        appendToDisplay(sender.currentTitle!)
         println("set operation: \(operation!)")
     }
     
-    @IBAction func enter() {
+    @IBAction func enter(sender: UIButton) {
+        appendToDisplay(sender.currentTitle!)
         if let newValue = evaluate() {
-            displayValue = newValue
+            currentValue = newValue
         }
     }
     
     func evaluate() -> Double? {
         println("call eval")
-        if typingNumber {
-            motor.pushOperand(displayValue)
-            typingNumber = false
+        if typing {
+            motor.pushOperand(currentValue)
+            typing = false
         }
         let result = motor.performOperation(operation)
         operation = nil
