@@ -68,6 +68,7 @@ class ViewController: UIViewController {
                 typingNumber = false
             }
         }
+        history.text! = motor.description
         operation = sender.currentTitle!
         println("set operation: \(operation!)")
     }
@@ -87,7 +88,6 @@ class ViewController: UIViewController {
         let result = motor.performOperation(operation)
         
         history.text! = motor.description
-        
         operation = nil
         return result
     }
