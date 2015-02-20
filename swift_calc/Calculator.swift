@@ -66,45 +66,45 @@ class Calculator {
     func performOperation(type: String?) -> Double? {
         if let symbol = type {
             if let operation = knownOperations[symbol] {
+                println("add operation: \(symbol)")
                 stack.append(operation)
+                return evaluate()
             }
-            
-        }
-        
-        // also evaluate if no operation (just return value...)
-        if let result = evaluate() {
-            stack.append(Op.Operand(result))
-            println("app result to stack: \(result)")
-//            println("print stack:")
-//            for op in stack {
-//                println(op!.description)
-//            }
-            return result
         }
         return nil
     }
     
-    private func evaluate() -> Double? {
-        if !stack.isEmpty {
-            if let currentOp = stack.removeLast() {
+    func evaluate() -> Double? {
+        // could add result to stack...
+        println("stacksize: \(stack.count)")
+        return evaluate(stack).result
+    }
+    
+    private func evaluate(opStack: [Op?]) -> (result: Double?, remainingOps: [Op?]) {
+        if !opStack.isEmpty {
+            var remainingOps = opStack
+            if let currentOp = remainingOps.removeLast() {
                 switch currentOp {
                 case .Operand(let value):
                     println("return value: \(value)")
-                    return value
+                    return (value, remainingOps)
                 case .UnaryOperation(_, let operation):
-                    if let op = evaluate() {
-                        return operation(op)
-                    }
+                    let eval = evaluate(remainingOps)
+                        if let op = eval.result {
+                            return (operation(op), eval.remainingOps)
+                        }
                 case .BinaryOperation(_, let operation):
-                    if let op1 = evaluate() {
-                        if let op2 = evaluate() {
+                    let eval1 = evaluate(remainingOps)
+                    if let op1 = eval1.result {
+                        let eval2 = evaluate(eval1.remainingOps)
+                        if let op2 = eval2.result {
                             println("return operation")
-                            return operation(op1, op2)
+                            return (operation(op1, op2), remainingOps)
                         }
                     }
                 }
             }
         }
-        return nil
+        return (nil,opStack)
     }
 }

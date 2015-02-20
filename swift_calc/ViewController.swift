@@ -35,7 +35,7 @@ class ViewController: UIViewController {
         operation = nil
     }
     
-    @IBAction func addDigit(sender: UIButton) {
+    @IBAction func appendDigit(sender: UIButton) {
         if typingNumber {
             display.text! += sender.currentTitle!
         } else {
@@ -44,21 +44,17 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func addFloatingPoing(sender: UIButton) {
+    @IBAction func floatPoint(sender: UIButton) {
         if display.text?.rangeOfString(sender.currentTitle!) == nil {
-            addDigit(sender)
+            appendDigit(sender)
         }
     }
     
-    @IBAction func addVariable(sender: UIButton) {
+    @IBAction func useVar(sender: UIButton) {
         if !typingNumber {
             motor.pushOperand(sender.currentTitle!)
             display.text! = sender.currentTitle!
         }
-    }
-    
-    @IBAction func addDigitToEquation(sender: UIButton) {
-        history.text! += sender.currentTitle!
     }
     
     @IBAction func operate(sender: UIButton) {
