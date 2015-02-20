@@ -34,6 +34,32 @@ class Calculator {
     
     private var variables = [String:Op]()
     
+    var description: String {
+        get {
+            return describe(stack).result
+        }
+    }
+    
+    private func describe(opStack: [Op?]) -> (result: String, remainingOps: [Op?]) {
+        if !opStack.isEmpty {
+            var remainingOps = opStack
+            if let currentOp = remainingOps.removeLast() {
+                switch currentOp {
+                case .Operand:
+                    return (currentOp.description, remainingOps)
+                case .UnaryOperation:
+                    let op = describe(remainingOps).result
+                    return ("\(currentOp.description)(\(op))", remainingOps)
+                case .BinaryOperation:
+                    let op1 = describe(remainingOps)
+                    let op2 = describe(op1.remainingOps)
+                    return ("(\(op2.result)\(currentOp)\(op1.result))", remainingOps)
+                }
+            }
+        }
+        return ("?", opStack)
+    }
+    
     init() {
         // binary operations
         knownOperations["+"] = Op.BinaryOperation("+", { $0 + $1})

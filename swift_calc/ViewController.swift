@@ -85,6 +85,9 @@ class ViewController: UIViewController {
             typingNumber = false
         }
         let result = motor.performOperation(operation)
+        
+        history.text! = motor.description
+        
         operation = nil
         return result
     }
